@@ -1,5 +1,5 @@
 #root {
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2rem 1rem;
   display: flex;
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .app-heading {
@@ -23,8 +23,60 @@
   letter-spacing: 0.01em;
 }
 
+/* Tab nav */
+.app-tabs {
+  display: flex;
+  gap: 6px;
+  background-color: #2a2a3d;
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid #3a3a55;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: #9090b0;
+  padding: 7px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  background-color: #32324a;
+  color: #d0d0f0;
+}
+
+.tab-btn.active {
+  background-color: #5c6bc0;
+  color: #fff;
+  font-weight: 600;
+}
+
+.app-content {
+  width: 100%;
+}
+
 @media (prefers-color-scheme: light) {
-  .app-heading {
-    color: #3a3aaa;
+  .app-heading { color: #3a3aaa; }
+
+  .app-tabs {
+    background-color: #ededf8;
+    border-color: #d0d0e8;
+  }
+
+  .tab-btn { color: #6060a0; }
+
+  .tab-btn:hover {
+    background-color: #e0e0f5;
+    color: #1a1a3a;
+  }
+
+  .tab-btn.active {
+    background-color: #5c6bc0;
+    color: #fff;
   }
 }

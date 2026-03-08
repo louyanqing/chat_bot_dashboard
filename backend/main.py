@@ -8,7 +8,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.core.config import DATA_DIR
 from backend.models.knowledge_base import PeterLynchKB
-from backend.routers import admin, chat
+from backend.models.financial_ratios import FinancialAnalyzer
+from backend.routers import admin, chat, finance
 
 app = FastAPI(title="Peter Lynch Chatbot Backend")
 
@@ -21,9 +22,11 @@ app.add_middleware(
 )
 
 app.state.kb = PeterLynchKB(DATA_DIR)
+app.state.fin = FinancialAnalyzer()
 
 app.include_router(admin.router)
 app.include_router(chat.router)
+app.include_router(finance.router)
 
 
 if __name__ == "__main__":

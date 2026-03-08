@@ -1,0 +1,138 @@
+.fin-dashboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fin-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #e0e0f0;
+}
+
+.fin-reload-btn {
+  background-color: #5c6bc0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.fin-reload-btn:hover:not(:disabled) {
+  background-color: #7986cb;
+}
+
+.fin-reload-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.fin-error {
+  color: #ff6b6b;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.fin-loading {
+  color: #9090b0;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.fin-table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #3a3a55;
+}
+
+.fin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.fin-th {
+  background-color: #2a2a3d;
+  color: #a0a8ff;
+  padding: 10px 14px;
+  text-align: right;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 2px solid #3a3a55;
+  transition: background-color 0.15s;
+}
+
+.fin-th:first-child {
+  text-align: left;
+}
+
+.fin-th:hover,
+.fin-th.active {
+  background-color: #32324a;
+}
+
+.sort-arrow {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.fin-tr:nth-child(even) {
+  background-color: #232335;
+}
+
+.fin-tr:hover {
+  background-color: #2e2e48;
+}
+
+.fin-td {
+  padding: 8px 14px;
+  color: #d0d0e8;
+  text-align: right;
+  border-bottom: 1px solid #2a2a3d;
+  white-space: nowrap;
+}
+
+.fin-td.symbol-cell {
+  text-align: left;
+  font-weight: 600;
+  color: #a0a8ff;
+  font-family: monospace;
+  font-size: 0.92rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .fin-title { color: #1a1a3a; }
+
+  .fin-table-wrapper { border-color: #d0d0e8; }
+
+  .fin-th {
+    background-color: #ededf8;
+    color: #3a3aaa;
+    border-bottom-color: #d0d0e8;
+  }
+
+  .fin-th:hover,
+  .fin-th.active { background-color: #e0e0f5; }
+
+  .fin-tr:nth-child(even) { background-color: #f9f9ff; }
+
+  .fin-tr:hover { background-color: #eeeeff; }
+
+  .fin-td {
+    color: #1a1a3a;
+    border-bottom-color: #e0e0f0;
+  }
+
+  .fin-td.symbol-cell { color: #3a3aaa; }
+}
