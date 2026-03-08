@@ -40,7 +40,7 @@ class PeterLynchKB:
         if pd.isna(value):
             return ""
         text = str(value).strip()
-        return re.sub(r"\s+", " ", text)
+        return re.sub(r"\s+", " ", text) # Replace multiple whitespace with single space
 
     @staticmethod
     def _guess_column(df: pd.DataFrame, candidates: List[str]) -> Optional[str]:
@@ -103,7 +103,7 @@ class PeterLynchKB:
     # ------------------------------------------------------------------
 
     def load(self) -> None:
-        csv_files = sorted(glob.glob(os.path.join(self.data_dir, "*.csv")))
+        csv_files = sorted(glob.glob(os.path.join(self.data_dir, "peter_lynch_personal_life_120.csv")))
         self.rows = []
 
         for path in csv_files:
@@ -124,7 +124,7 @@ class PeterLynchKB:
 
     def search(self, query: str, top_k: int = TOP_K) -> List[dict]:
         if not self.rows or self.vectorizer is None or self.matrix is None:
-            return []
+            return [] 
 
         query = self._normalize_text(query)
         if not query:

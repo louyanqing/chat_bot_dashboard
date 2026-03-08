@@ -128,6 +128,11 @@
   cursor: default;
 }
 
+.message-bubble.loading {
+  opacity: 0.6;
+  font-style: italic;
+}
+
 @media (prefers-color-scheme: light) {
   .chatbot-container {
     background-color: #f5f5fa;
