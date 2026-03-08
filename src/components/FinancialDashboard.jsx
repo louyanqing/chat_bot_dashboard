@@ -58,7 +58,7 @@ export default function FinancialDashboard() {
       {error && <p className="fin-error">⚠️ {error}</p>}
 
       {loading && !ratios.length ? (
-        <p className="fin-loading">Fetching financial data… this may take a moment.</p>
+        <p className="fin-loading">Fetching financial data from Yahoo Finance in the background — checking every 5 s…</p>
       ) : (
         <div className="fin-table-wrapper">
           <table className="fin-table">

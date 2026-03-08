@@ -28,7 +28,7 @@ export default function Recommendations() {
       {error && <p className="rec-error">⚠️ {error}</p>}
 
       {loading && !long.length && !short.length ? (
-        <p className="rec-loading">Running K-Means clustering… this may take a moment.</p>
+        <p className="rec-loading">Running K-Means clustering in the background — checking every 5 s…</p>
       ) : (
         <div className="rec-columns">
           <div className="rec-panel long">
