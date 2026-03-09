@@ -27,8 +27,12 @@ class PeterLynchKB:
     def __init__(self, data_dir: str) -> None:
         self.data_dir = data_dir
         self.rows: List[KBRow] = []
+        # full-text index (question + answer + label)
         self.vectorizer: Optional[TfidfVectorizer] = None
         self.matrix = None
+        # question-only index for direct question matching
+        self.q_vectorizer: Optional[TfidfVectorizer] = None
+        self.q_matrix = None
         self.load()
 
     # ------------------------------------------------------------------
@@ -103,7 +107,7 @@ class PeterLynchKB:
     # ------------------------------------------------------------------
 
     def load(self) -> None:
-        csv_files = sorted(glob.glob(os.path.join(self.data_dir, "peter_lynch_personal_life_120.csv")))
+        csv_files = sorted(glob.glob(os.path.join(self.data_dir, "peter_lynch_personal_life_356.csv")))
         self.rows = []
 
         for path in csv_files:
@@ -112,26 +116,43 @@ class PeterLynchKB:
         if not self.rows:
             self.vectorizer = None
             self.matrix = None
+            self.q_vectorizer = None
+            self.q_matrix = None
             return
 
         corpus = [row.text_for_search for row in self.rows]
         self.vectorizer = TfidfVectorizer(
-            lowercase=True,
-            stop_words="english",
-            ngram_range=(1, 2),
+            lowercase=True, stop_words="english", ngram_range=(1, 2), sublinear_tf=True
         )
         self.matrix = self.vectorizer.fit_transform(corpus)
 
+        # Question-only index: keep stop words so "is" vs "was" stays discriminating
+        q_corpus = [row.question for row in self.rows]
+        self.q_vectorizer = TfidfVectorizer(
+            lowercase=True, stop_words=None, ngram_range=(1, 2), sublinear_tf=True
+        )
+        self.q_matrix = self.q_vectorizer.fit_transform(q_corpus)
+
     def search(self, query: str, top_k: int = TOP_K) -> List[dict]:
         if not self.rows or self.vectorizer is None or self.matrix is None:
-            return [] 
+            return []
 
         query = self._normalize_text(query)
         if not query:
             return []
 
-        query_vector = self.vectorizer.transform([query])
-        scores = cosine_similarity(query_vector, self.matrix).flatten()
+        # Full-text similarity
+        full_scores = cosine_similarity(
+            self.vectorizer.transform([query]), self.matrix
+        ).flatten()
+
+        # Question-only similarity (higher weight — rewards direct question matches)
+        q_scores = cosine_similarity(
+            self.q_vectorizer.transform([query]), self.q_matrix
+        ).flatten()
+
+        scores = 0.35 * full_scores + 0.65 * q_scores
+
         ranked_idx = scores.argsort()[::-1][:top_k]
 
         return [
@@ -162,7 +183,11 @@ class PeterLynchKB:
             )
 
         answer_text = best["answer"]
-        if len(matches) > 1 and matches[1]["score"] >= 0.25:
+        if (
+            len(matches) > 1
+            and matches[1]["score"] >= 0.25
+            and matches[1]["label"] != best["label"]
+        ):
             answer_text += f"\n\nRelated angle: {matches[1]['answer']}"
 
         return ChatResponse(

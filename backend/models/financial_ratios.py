@@ -9,6 +9,7 @@ import pandas as pd
 from yahooquery import Ticker
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
 
 warnings.filterwarnings("ignore", category=Warning)
 random.seed(42)
@@ -47,6 +48,7 @@ class FinancialAnalyzer:
         self._display_df: Optional[pd.DataFrame] = None  # index=symbol, cols=metrics
         self._long: List[str] = []
         self._short: List[str] = []
+        self._cluster_points: List[dict] = []
         self.load()
 
     def load(self) -> None:
@@ -74,12 +76,44 @@ class FinancialAnalyzer:
         self._long  = list(data.index[yhat == LONG_CLUSTER])
         self._short = list(data.index[yhat == SHORT_CLUSTER])
 
+        # PCA → 2D for the scatter plot
+        X_2d = PCA(n_components=2, random_state=42).fit_transform(X)
+        self._cluster_points = [
+            {
+                "symbol":  str(data.index[i]),
+                "x":       round(float(X_2d[i, 0]), 5),
+                "y":       round(float(X_2d[i, 1]), 5),
+                "cluster": int(yhat[i]),
+                "signal":  (
+                    "long"  if yhat[i] == LONG_CLUSTER  else
+                    "short" if yhat[i] == SHORT_CLUSTER else
+                    "neutral"
+                ),
+            }
+            for i in range(len(data.index))
+        ]
+
     def get_ratios(self, symbols: Optional[List[str]] = None) -> List[dict]:
         if self._display_df is None:
             return []
-        df = self._display_df
+
         if symbols:
-            df = df[df.index.isin([s.upper() for s in symbols])]
+            symbols = [s.upper() for s in symbols]
+            missing = [s for s in symbols if s not in self._display_df.index]
+            if missing:
+                try:
+                    new_data = Ticker(missing).financial_data
+                    new_df = pd.DataFrame.from_dict(new_data, orient="index")
+                    self._display_df = pd.concat([self._display_df, new_df])
+                    self._display_df = self._display_df[
+                        ~self._display_df.index.duplicated(keep="last")
+                    ]
+                except Exception as exc:
+                    print(f"Could not fetch symbols {missing}: {exc}")
+            df = self._display_df[self._display_df.index.isin(symbols)]
+        else:
+            df = self._display_df
+
         available = [c for c in DISPLAY_COLS if c in df.columns]
         result = []
         for symbol, row in df[available].iterrows():
@@ -92,3 +126,6 @@ class FinancialAnalyzer:
 
     def get_recommendations(self) -> dict:
         return {"long": self._long, "short": self._short}
+
+    def get_cluster_points(self) -> List[dict]:
+        return self._cluster_points

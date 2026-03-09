@@ -4,7 +4,10 @@ from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query, Request
 
-from backend.schemas.finance import RatiosResponse, RecommendationsResponse, StockRatio
+from backend.schemas.finance import (
+    RatiosResponse, RecommendationsResponse, StockRatio,
+    ClustersResponse, ClusterPoint,
+)
 from backend.models.financial_ratios import FinancialAnalyzer
 
 router = APIRouter(prefix="/finance", tags=["finance"])
@@ -33,6 +36,12 @@ def get_ratios(
     symbol_list = [s.strip() for s in symbols.split(",")] if symbols else None
     rows = fin.get_ratios(symbol_list)
     return RatiosResponse(ratios=[StockRatio(**r) for r in rows])
+
+
+@router.get("/clusters", response_model=ClustersResponse)
+def get_clusters(request: Request):
+    fin = _require_fin(request)
+    return ClustersResponse(points=[ClusterPoint(**p) for p in fin.get_cluster_points()])
 
 
 @router.get("/recommendations", response_model=RecommendationsResponse)

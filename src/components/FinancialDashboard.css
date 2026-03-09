@@ -28,15 +28,209 @@
   transition: background-color 0.2s;
 }
 
-.fin-reload-btn:hover:not(:disabled) {
-  background-color: #7986cb;
+.fin-reload-btn:hover:not(:disabled) { background-color: #7986cb; }
+.fin-reload-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── Portfolio selector ── */
+.fin-selector {
+  background-color: #2a2a3d;
+  border: 1px solid #3a3a55;
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.fin-reload-btn:disabled {
-  opacity: 0.4;
-  cursor: default;
+.fin-selector-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+.fin-selector-label {
+  font-size: 0.82rem;
+  color: #9090b0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fin-reset-btn {
+  background: transparent;
+  border: 1px solid #5c6bc0;
+  color: #a0a8ff;
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.fin-reset-btn:hover {
+  background-color: rgba(92, 107, 192, 0.15);
+}
+
+/* chips — display only, no remove button */
+.fin-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 110px;
+  overflow-y: auto;
+}
+
+.fin-chip {
+  background-color: #1e1e2e;
+  border: 1px solid #3a3a55;
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #a0a8ff;
+}
+
+/* ── Add + Remove controls row ── */
+.fin-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fin-add-row {
+  display: flex;
+  gap: 6px;
+}
+
+.fin-add-input {
+  width: 140px;
+  background-color: #1e1e2e;
+  color: #e0e0f0;
+  border: 1px solid #4a4a65;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.88rem;
+  font-family: monospace;
+  font-weight: 600;
+  outline: none;
+  text-transform: uppercase;
+  transition: border-color 0.2s;
+}
+
+.fin-add-input:focus { border-color: #5c6bc0; }
+
+.fin-add-btn {
+  background-color: #5c6bc0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.fin-add-btn:hover:not(:disabled) { background-color: #7986cb; }
+.fin-add-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── Remove dropdown ── */
+.fin-dropdown-wrapper {
+  position: relative;
+}
+
+.fin-dropdown-trigger {
+  background-color: #3a2a2a;
+  color: #ff9090;
+  border: 1px solid #7a3a3a;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s;
+}
+
+.fin-dropdown-trigger:hover:not(:disabled) {
+  background-color: #4a2e2e;
+}
+
+.fin-dropdown-trigger:disabled { opacity: 0.4; cursor: default; }
+
+.fin-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 100;
+  background-color: #1e1e2e;
+  border: 1px solid #3a3a55;
+  border-radius: 8px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fin-dropdown-list {
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.fin-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background-color 0.12s;
+}
+
+.fin-dropdown-item:hover {
+  background-color: #2a2a3d;
+}
+
+.fin-dropdown-item input[type='checkbox'] {
+  accent-color: #ff6b6b;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.fin-dropdown-sym {
+  font-family: monospace;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #d0d0e8;
+}
+
+.fin-dropdown-footer {
+  padding: 8px 10px;
+  border-top: 1px solid #3a3a55;
+}
+
+.fin-remove-btn {
+  width: 100%;
+  background-color: #7a2a2a;
+  color: #ffaaaa;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.fin-remove-btn:hover:not(:disabled) {
+  background-color: #962e2e;
+}
+
+.fin-remove-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── Errors / loading ── */
 .fin-error {
   color: #ff6b6b;
   margin: 0;
@@ -49,6 +243,7 @@
   font-size: 0.9rem;
 }
 
+/* ── Table ── */
 .fin-table-wrapper {
   overflow-x: auto;
   border-radius: 8px;
@@ -73,27 +268,13 @@
   transition: background-color 0.15s;
 }
 
-.fin-th:first-child {
-  text-align: left;
-}
+.fin-th:first-child { text-align: left; }
+.fin-th:hover, .fin-th.active { background-color: #32324a; }
 
-.fin-th:hover,
-.fin-th.active {
-  background-color: #32324a;
-}
+.sort-arrow { font-size: 0.7rem; opacity: 0.6; }
 
-.sort-arrow {
-  font-size: 0.7rem;
-  opacity: 0.6;
-}
-
-.fin-tr:nth-child(even) {
-  background-color: #232335;
-}
-
-.fin-tr:hover {
-  background-color: #2e2e48;
-}
+.fin-tr:nth-child(even) { background-color: #232335; }
+.fin-tr:hover { background-color: #2e2e48; }
 
 .fin-td {
   padding: 8px 14px;
@@ -111,28 +292,32 @@
   font-size: 0.92rem;
 }
 
+/* ── Light mode ── */
 @media (prefers-color-scheme: light) {
   .fin-title { color: #1a1a3a; }
 
+  .fin-selector { background-color: #ededf8; border-color: #d0d0e8; }
+
+  .fin-chip { background-color: #fff; border-color: #c0c0e0; color: #3a3aaa; }
+
+  .fin-add-input { background-color: #fff; color: #1a1a3a; border-color: #b0b0d0; }
+
+  .fin-dropdown-panel { background-color: #fff; border-color: #d0d0e8; }
+
+  .fin-dropdown-item:hover { background-color: #f0f0ff; }
+
+  .fin-dropdown-sym { color: #1a1a3a; }
+
+  .fin-dropdown-footer { border-top-color: #d0d0e8; }
+
   .fin-table-wrapper { border-color: #d0d0e8; }
 
-  .fin-th {
-    background-color: #ededf8;
-    color: #3a3aaa;
-    border-bottom-color: #d0d0e8;
-  }
-
-  .fin-th:hover,
-  .fin-th.active { background-color: #e0e0f5; }
+  .fin-th { background-color: #ededf8; color: #3a3aaa; border-bottom-color: #d0d0e8; }
+  .fin-th:hover, .fin-th.active { background-color: #e0e0f5; }
 
   .fin-tr:nth-child(even) { background-color: #f9f9ff; }
-
   .fin-tr:hover { background-color: #eeeeff; }
 
-  .fin-td {
-    color: #1a1a3a;
-    border-bottom-color: #e0e0f0;
-  }
-
+  .fin-td { color: #1a1a3a; border-bottom-color: #e0e0f0; }
   .fin-td.symbol-cell { color: #3a3aaa; }
 }

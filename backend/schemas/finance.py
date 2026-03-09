@@ -24,3 +24,15 @@ class RatiosResponse(BaseModel):
 class RecommendationsResponse(BaseModel):
     long: List[str]
     short: List[str]
+
+
+class ClusterPoint(BaseModel):
+    symbol: str
+    x: float
+    y: float
+    cluster: int
+    signal: str   # 'long' | 'short' | 'neutral'
+
+
+class ClustersResponse(BaseModel):
+    points: List[ClusterPoint]

@@ -7,6 +7,7 @@ const useChatStore = create((set, get) => ({
   error: null,
 
   initialize: async () => {
+    if (get().messages.length > 0) return   // already have history — don't overwrite
     try {
       const { data } = await client.get('/')
       set({ messages: [{ role: 'bot', text: data.message }] })
