@@ -34,7 +34,7 @@ export default function ChatBot() {
   return (
     <div className="chatbot-container">
       <div className="chatbot-header">
-        <span className="chatbot-avatar">🦁</span>
+        <span className="chatbot-avatar" style={{ backgroundImage: 'url(/peter_lynch.svg)' }}></span>
         <div>
           <h2 className="chatbot-title">Peter Lynch Investment Advisor</h2>
           <p className="chatbot-subtitle">Ask me anything about Lynch&apos;s investing principles</p>

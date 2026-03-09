@@ -21,7 +21,14 @@
 }
 
 .chatbot-avatar {
-  font-size: 2rem;
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
 }
 
 .chatbot-title {

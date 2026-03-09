@@ -107,7 +107,7 @@ class PeterLynchKB:
     # ------------------------------------------------------------------
 
     def load(self) -> None:
-        csv_files = sorted(glob.glob(os.path.join(self.data_dir, "peter_lynch_personal_life_356.csv")))
+        csv_files = sorted(glob.glob(os.path.join(self.data_dir, "*.csv")))
         self.rows = []
 
         for path in csv_files:

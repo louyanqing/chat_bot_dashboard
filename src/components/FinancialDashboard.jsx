@@ -110,13 +110,6 @@ export default function FinancialDashboard() {
           )}
         </div>
 
-        {/* current portfolio chips (display only) */}
-        <div className="fin-chips">
-          {selectedSymbols.map((sym) => (
-            <span key={sym} className="fin-chip">{sym}</span>
-          ))}
-        </div>
-
         {/* add + remove controls */}
         <div className="fin-controls-row">
           {/* add */}
