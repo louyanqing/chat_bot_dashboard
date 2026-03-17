@@ -26,5 +26,4 @@ dist-ssr
 
 CLAUDE.md
 .env
-data/*.csv
-data/
+backend/data/
