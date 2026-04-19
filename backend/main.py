@@ -10,14 +10,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.core.config import DATA_DIR
-from backend.models.knowledge_base import PeterLynchKB
+from backend.models.rag_knowledge_base import PeterLynchRAGKB
 from backend.models.financial_ratios import FinancialAnalyzer
 from backend.routers import admin, chat, finance
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    app.state.kb = PeterLynchKB(DATA_DIR)
+    app.state.kb = PeterLynchRAGKB(DATA_DIR)
     app.state.fin = None  # will be set by background thread
 
     def _load_fin():

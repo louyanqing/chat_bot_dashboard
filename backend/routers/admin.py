@@ -5,7 +5,7 @@ import os
 from fastapi import APIRouter, Request
 
 from backend.core.config import DATA_DIR, GREETING
-from backend.models.knowledge_base import PeterLynchKB
+from backend.models.rag_knowledge_base import PeterLynchRAGKB
 
 router = APIRouter(tags=["admin"])
 
@@ -15,7 +15,7 @@ def root(request: Request):
     kb = request.app.state.kb
     return {
         "message": GREETING,
-        "loaded_rows": len(kb.rows),
+        "loaded_rows": len(kb._raw_rows),
         "data_dir": os.path.abspath(DATA_DIR),
     }
 
@@ -25,17 +25,17 @@ def health(request: Request):
     kb = request.app.state.kb
     return {
         "status": "ok",
-        "loaded_rows": len(kb.rows),
+        "loaded_rows": len(kb._raw_rows),
         "data_dir": os.path.abspath(DATA_DIR),
     }
 
 
 @router.post("/reload")
 def reload(request: Request):
-    request.app.state.kb = PeterLynchKB(DATA_DIR)
+    request.app.state.kb = PeterLynchRAGKB(DATA_DIR)
     kb = request.app.state.kb
     return {
         "message": "Knowledge base reloaded.",
-        "loaded_rows": len(kb.rows),
+        "loaded_rows": len(kb._raw_rows),
         "data_dir": os.path.abspath(DATA_DIR),
     }
