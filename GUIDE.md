@@ -19,4 +19,4 @@ Implementation requirements:
 7. Use FAISS as vector store.
 8. Use LangChain retrieval + prompt + LLM generation.
 9. Support OpenAI-compatible chat model via environment variables.
-10. If no LLM config is available, fall back gracefully to retrieval-only mode.
+
